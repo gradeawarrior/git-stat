@@ -10,9 +10,41 @@ The toolset can be installed via:
 	
 ## Usage
 
-TODO
-	
+It's really quite simple! You execute `git-stat` inside a project, and it will print out a yaml with all the statistics. There is an option to pass it a git directory, that way you don't have to explicitly be in the directory to execute `git-stat`:
 
+	Usage: git-stat [options]
+	    -d, --dir GIT_DIR                A git directory to get stats on (Default: current directory)
+    	-h, --help                       Display this screen
+	
+Executing the command on the local repo, will give you an output like this:
+
+	$ git-stat
+	---
+	project_name: git-stat
+	total_files: 13
+	total_lines: 665
+	file_types:
+	  UNKNOWN: 6
+	  .rb: 3
+	  .gemspec: 1
+	  .txt: 1
+	  .lock: 1
+	  .md: 1
+	authors_line_count:
+	  Peter Salas: 659
+	  Not Committed Yet: 6
+	line_counts_by_type:
+	  .rb: 249
+	  UNKNOWN: 171
+	  .lock: 81
+	  .md: 80
+	  .gemspec: 64
+	  .txt: 20
+	branches:
+	- remotes/origin/master
+	tags:
+	- v1.0.0
+	
 ## Documentation
 
 The projects homepage can be found [here](https://github.com/gradeawarrior/git-stat). You can also refer to the [Rubydoc YARD Server](http://rubydoc.info/gems/git-stat/frames)

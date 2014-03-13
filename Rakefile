@@ -21,7 +21,9 @@ Jeweler::Tasks.new do |gem|
   gem.description = "Git Statistics Utility for your projects"
   gem.email = "psalas+github@gmail.com"
   gem.authors = ["Peter Salas"]
+
   # dependencies defined in Gemfile
+  gem.required_ruby_version= '>= 1.9.2'
 end
 Jeweler::RubygemsDotOrgTasks.new
 
