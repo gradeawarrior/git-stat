@@ -1,6 +1,49 @@
 #!/usr/bin/env ruby
 
+require 'optparse'
 require 'yaml'
-require 'git-stat'
 
-puts Git::all_stats.to_yaml
+def show_usage(opts, message=nil)
+  code = 0
+  puts opts
+
+  if !message.nil?
+    puts "[ERROR] #{message}"
+    code = 1
+  end
+  exit(code)
+end
+
+## Variables
+git_dir = '.'
+
+# Process command line arguments if any.
+opts = OptionParser.new do |opts|
+
+  # Set a banner, displayed at the top
+  # of the help screen.
+  opts.banner = "Usage: git-stat [options]"
+
+  opts.on('-d', '--dir GIT_DIR', "A git directory to get stats on (Default: current directory)") do |dir|
+    show_usage("'#{dir} does not exist!") unless File.exist?(dir)
+    show_usage("'#{dir} is not a directory!") unless File.directory?(dir)
+    git_dir = dir
+  end
+
+  # This displays the help screen, all programs are
+  # assumed to have this option.
+  opts.on('-h', '--help', 'Display this screen') do
+    show_usage(opts)
+  end
+end
+
+opts.parse(ARGV)
+
+require 'git-stat'
+Dir.chdir(git_dir)
+if Git::is_git_project?
+  stats = Git::all_stats
+  puts stats.to_yaml
+else
+  show_usage(opts, "#{git_dir} is not a git project!")
+end
